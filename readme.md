@@ -47,13 +47,26 @@ This is a bare bones node/express app with basic user authentication. It exists 
 git clone <repo_link> <new_name>
 ```
 
-#### 2. Create a new database for your new project
+#### 2. Install node modules from  `package.json`
+
+```
+npm install
+```
+
+#### 3. Customize with project name
+
+* Title in the layout.ejs
+* Logo in the navbar
+* Description/Repo link in package.json
+* Remove the auth boilerplate's readme content
+
+#### 4. Create a new database for your new project
 
 ```
 createdb <new_db_name>
 ```
 
-#### 3. Open `config.json` and change the following
+#### 5. Open `config.json` and change the following
 
 * Change database name to what you created in step 2
 * Set username/password for your local environment
@@ -61,27 +74,21 @@ createdb <new_db_name>
 
 > NOTE: If changing from Postgres, you will need different node_modules
 
-#### 4. Check models and migrations for your needs
+#### 6. Check models and migrations for your needs
 
 For example, if you don't need the `admin` column, you will want to delete it from both the migration and model for the user. Likewise, if you need to add something, add in both files.
 
-#### 5. Run the migrations
+#### 7. Run the migrations
 
 ```
 sequelize db:migrate
 ```
 
-#### 6. Add a `.env` file with a SESSION_SECRET key
+#### 8. Add a `.env` file with a SESSION_SECRET key
 
 This can be set to anything.
 
-#### 7. Install node modules from  `package.json`
-
-```
-npm install
-```
-
-#### 8. Run your server and make sure everything works
+#### 9. Run your server and make sure everything works
 
 If you have nodemon installed globally:
 ```
@@ -93,7 +100,7 @@ Otherwise:
 node index.js
 ```
 
-#### 9. Create a new repository for the new project to live in! 
+#### 10. Create a new repository for the new project to live in! 
 
 * Create a new repository on your personal Github account.
 * Delete the old remote to origin
@@ -113,22 +120,3 @@ git push origin master
 ## Next steps
 
 Assuming that the set up steps went smoothly, now you can add new models/migrations for your new app, and generally just start developing it as if you had started from scratch! 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
