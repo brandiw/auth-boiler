@@ -1,6 +1,9 @@
 // Require .env file's variables
 require('dotenv').config();
 
+// Require models
+var db = require('./models');
+
 // Require needed modules
 var bodyParser = require('body-parser');
 var ejsLayouts = require('express-ejs-layouts');
@@ -8,6 +11,12 @@ var express = require('express');
 var flash = require('connect-flash');
 var passport = require('./config/passportConfig');
 var session = require('express-session');
+
+// These lines makes the session use sequelize to write session data to a db table
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
+var sessionStore = new SequelizeStore({
+  db: db.sequelize
+});
 
 // Declare app variable
 var app = express();
@@ -19,8 +28,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: sessionStore,
+  cookie: { maxAge: 30 * 60 * 1000 }
 }));
+sessionStore.sync(); // creates the sessions table
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
