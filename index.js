@@ -15,7 +15,8 @@ var session = require('express-session');
 // These lines makes the session use sequelize to write session data to a db table
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var sessionStore = new SequelizeStore({
-  db: db.sequelize
+  db: db.sequelize,
+  expiration: 30 * 60 * 1000 // expire in 30 minutes
 });
 
 // Declare app variable
@@ -29,8 +30,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  store: sessionStore,
-  cookie: { maxAge: 30 * 60 * 1000 }
+  store: sessionStore
 }));
 sessionStore.sync(); // creates the sessions table
 app.use(flash());
